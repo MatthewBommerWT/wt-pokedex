@@ -12,9 +12,10 @@ private let reuseIdentifier = "Cell"
 class PokedexCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let client = APIClient()
+    let archiver = Archiver()
     let baseURL = "https://pokeapi.co/api/v2/pokemon"
     let spacing: CGFloat = 8.0
-
+    
     var nextURL: String?
     var resultsList: [NamedAPIResource] = []
     var pokemonList: [Pokemon] = []
@@ -72,7 +73,6 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
         client.performDecodable(request: request) { (result: Result<Pokemon, Error>) in
             switch result {
             case .success(let pokemon):
-                print(pokemon.name)
                 self.pokemonList.append(pokemon)
                 DispatchQueue.main.async {
                     self.pokemonList.sort { $0.id < $1.id }
@@ -83,13 +83,11 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
             }
         }
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return pokemonList.count
     }
 
-    //TODO figure out why this is broken
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PokemonCollectionViewCell", for: indexPath) as! PokemonCollectionViewCell
         cell.configure(pokemon: pokemonList[indexPath.item])
