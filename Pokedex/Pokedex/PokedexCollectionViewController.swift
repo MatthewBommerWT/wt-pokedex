@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PinkyPromise
 
 private let reuseIdentifier = "Cell"
 
@@ -35,7 +36,47 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
         collectionView.collectionViewLayout = layout
         collectionView.delegate = self
         collectionView.dataSource = self
-        requestPokemonApiCalls()
+        requestPromise()
+    }
+    
+    func getRequest() -> URLRequest? {
+        var urlComponent = URLComponents(string: nextURL ?? baseURL) //Fix this in the future, the collection view will cycle through api forever
+        if nextURL == nil {
+            let queries = [URLQueryItem(name: "limit", value: "20"), URLQueryItem(name: "offset", value: "0")]
+            urlComponent?.queryItems = queries
+        }
+        
+        guard let url = urlComponent?.url else {
+            return nil
+        }
+        return URLRequest(url: url)
+    }
+    
+    func requestPromise() {
+        guard let request = getRequest() else {
+            return
+        }
+        
+        let promise: Promise<NamedAPIResourceList> = client.performPromise(request: request)
+        let pokePromise: Promise<[Pokemon]> = promise.flatMap { apiResourceList in
+            self.nextURL = apiResourceList.next
+            return zipArray(apiResourceList.results.map({ (resourceResult) -> Promise<Pokemon> in
+                let request = URLRequest(url: URL(string: resourceResult.url)!)
+                return self.client.performPromise(request: request)
+            }))
+        }
+        
+        pokePromise.call { (result) in
+            switch result {
+            case .success(let listOfPokemon):
+                self.pokemonList.append(contentsOf: listOfPokemon)
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     func requestPokemonApiCalls() {
@@ -106,7 +147,7 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.item == pokemonList.count - 1, !requestInTransit{
-            requestPokemonApiCalls()
+            requestPromise()
         }
     }
     

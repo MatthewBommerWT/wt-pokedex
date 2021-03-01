@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PinkyPromise
 
 enum APIError: Error {
     case missingData
@@ -42,4 +43,12 @@ class APIClient {
         }
     }
 
+    func performPromise<T: Decodable>(request: URLRequest) -> Promise<T> {
+        return Promise { fulfill in
+            self.performDecodable(request: request) { (result: Result<T, Error>) in
+                fulfill(result)
+            }
+        }
+    }
+    
 }
