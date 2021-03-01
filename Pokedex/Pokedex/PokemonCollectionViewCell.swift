@@ -28,7 +28,7 @@ class PokemonCollectionViewCell: UICollectionViewCell {
         
         self.backgroundColor = mainType?.color
         
-        guard let url = URL(string: pokemon.sprites.splash) else {
+        guard let url = URL(string: pokemon.sprites.thumbnail) else {
             return
         }
         let frame = CGSize(width: 100, height: 100)

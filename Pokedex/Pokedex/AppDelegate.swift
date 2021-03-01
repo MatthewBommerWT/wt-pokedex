@@ -11,11 +11,14 @@ import CoreData
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    private func setupURLCache() {
+         let cacheSize = 100 * 1024 * 1024 // 100 MB
+         let cache = URLCache(memoryCapacity: cacheSize, diskCapacity: cacheSize)
+         URLCache.shared = cache
+     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let _ = URLCache.shared
-        sleep(3)
+        setupURLCache()
         return true
     }
 

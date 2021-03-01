@@ -22,8 +22,6 @@ class APIClient {
     
     
     private func perform(request: URLRequest, completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        print("Is the response cached:", session.configuration.urlCache?.cachedResponse(for: request) != nil)
-        print(request.cachePolicy.rawValue)
         let task = session.dataTask(with: request, completionHandler: completion)
         task.resume()
     }
