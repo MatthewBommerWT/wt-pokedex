@@ -52,31 +52,41 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
         return URLRequest(url: url)
     }
     
+    private func fetchPokemonPromise(for resource: NamedAPIResource) -> Promise<Pokemon?>{
+        let request = URLRequest(url: URL(string: resource.url)!)
+        return client.performPromise(request: request).recover { error -> Promise<Pokemon?> in
+            return Promise(value: nil)
+        }
+    }
+    
+    private func zipPokemonPromise(resourceList: [NamedAPIResource]) -> Promise<[Pokemon?]> {
+        return zipArray(resourceList.map({ resource -> Promise<Pokemon?> in
+            fetchPokemonPromise(for: resource)
+        }))
+    }
+    
     func requestPromise() {
         guard let request = getRequest() else {
             return
         }
         
-        let promise: Promise<NamedAPIResourceList> = client.performPromise(request: request)
-        let pokePromise: Promise<[Pokemon]> = promise.flatMap { apiResourceList in
-            self.nextURL = apiResourceList.next
-            return zipArray(apiResourceList.results.map({ (resourceResult) -> Promise<Pokemon> in
-                let request = URLRequest(url: URL(string: resourceResult.url)!)
-                return self.client.performPromise(request: request)
-            }))
-        }
-        
-        pokePromise.call { (result) in
-            switch result {
-            case .success(let listOfPokemon):
-                self.pokemonList.append(contentsOf: listOfPokemon)
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
+        let pokePromise: Promise<[Pokemon?]> = client.performPromise(request: request)
+            .flatMap { (apiResourceList: NamedAPIResourceList) in
+                self.nextURL = apiResourceList.next
+                return self.zipPokemonPromise(resourceList: apiResourceList.results)
+            }.onResult { (result: Result<[Pokemon?], Error>) in
+                switch result {
+                case .success(let listOfPokemon):
+                    self.pokemonList.append(contentsOf: listOfPokemon.compactMap { $0 })
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                    }
+                case .failure(let error):
+                    print(error)
                 }
-            case .failure(let error):
-                print(error)
             }
-        }
+        
+        pokePromise.call()
     }
     
     func requestPokemonApiCalls() {
