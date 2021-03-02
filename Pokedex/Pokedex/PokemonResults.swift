@@ -15,7 +15,7 @@ struct NamedAPIResource: Decodable {
     let name: String
     let url: String
 }
-struct Pokemon: Codable {
+struct Pokemon: Codable, Hashable {
     let id: Int
     let name: String
     let height: Int
@@ -33,6 +33,14 @@ struct Pokemon: Codable {
         case sprites
         case types
         case stats
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+        return lhs.id == rhs.id
     }
 }
 
