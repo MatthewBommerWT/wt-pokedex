@@ -27,6 +27,7 @@ class PokemonCollectionViewCell: UICollectionViewCell {
         mainType = PokemonType.init(rawValue: pokemon.types[0].typeName)
         
         self.backgroundColor = mainType?.color
+        self.backgroundView = buildBackgroundView()
         
         guard let url = URL(string: pokemon.sprites.thumbnail) else {
             return
@@ -43,4 +44,17 @@ class PokemonCollectionViewCell: UICollectionViewCell {
         self.backgroundColor = .clear
     }
     
+    private func buildBackgroundView() -> UIImageView {
+        let backgroundImage = Image(named: "pokeballBackground")
+        let backgroundImageView = UIImageView(frame: self.frame)
+        
+        let colorCover = UIView(frame: self.bounds)
+        colorCover.backgroundColor = mainType?.color
+        colorCover.layer.opacity = 0.95
+        
+        backgroundImageView.image = backgroundImage
+        backgroundImageView.addSubview(colorCover)
+        
+        return backgroundImageView
+    }
 }
