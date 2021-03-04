@@ -49,7 +49,7 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
         collectionView.dataSource = self
     }
     
-    // MARK: NSDiffableDataSourceSnapshot
+    // MARK: UICollectionViewDiffableDataSource
     func makeDataSource() -> DataSource {
         let dataSource = DataSource(collectionView: collectionView) { (collectionView, indexPath, pokemon) -> UICollectionViewCell? in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PokemonCollectionViewCell
@@ -59,7 +59,7 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
         return dataSource
     }
     
-    // MARK: UICollectionViewDiffableDataSource
+    // MARK: NSDiffableDataSourceSnapshot
     func applySnapshot(animated: Bool = true) {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
@@ -67,7 +67,7 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
         dataSource.apply(snapshot, animatingDifferences: animated)
     }
     
-    // MARK: UICollectionViewDelegate
+    // MARK: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let itemsPerRow: CGFloat = 2
         let itemsPerCol: CGFloat = 5
@@ -78,6 +78,7 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
         return CGSize(width: (collectionView.frame.width - totalSpacingHorizontal) / itemsPerRow, height: (collectionView.frame.height - totalSpacingVertical) / itemsPerCol)
     }
     
+    // MARK: UICollectionViewDelegate
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.item == pokemonList.count - 1, !requestInTransit {
             requestPromise()

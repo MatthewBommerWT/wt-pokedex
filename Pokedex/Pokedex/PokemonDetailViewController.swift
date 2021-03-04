@@ -8,6 +8,8 @@
 import UIKit
 import AlamofireImage
 
+private let reuseIdentifier = "StatusCollectionViewCell"
+
 class PokemonDetailViewController: UIViewController {
 
     
@@ -17,8 +19,11 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var weightLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
-    @IBOutlet weak var hpBar: UIProgressView!
+    @IBOutlet weak var statusCollectionView: UICollectionView!
+    
+    let spacing: CGFloat = 4.0
     var pokemon: Pokemon!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +46,7 @@ class PokemonDetailViewController: UIViewController {
             return
         }
         pokemonSplashImage.af.setImage(withURL: url)
+        configureCollectionView()
     }
     
     private func pokemonIDStyler() -> String {
@@ -53,6 +59,45 @@ class PokemonDetailViewController: UIViewController {
         }
         return "#\(placeholderZeros)\(id)"
     }
+    
+    private func configureCollectionView() {
+        let nib = UINib(nibName: reuseIdentifier, bundle: Bundle(for: PokemonCollectionViewCell.self))
+        statusCollectionView.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
+        let layout = UICollectionViewFlowLayout()
+        statusCollectionView.isScrollEnabled = false
+        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        layout.minimumInteritemSpacing = spacing
+        layout.minimumLineSpacing = spacing
+        
+        statusCollectionView.collectionViewLayout = layout
+        statusCollectionView.delegate = self
+        statusCollectionView.dataSource = self
+    }
+    
+}
+extension PokemonDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return pokemon.stats.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! StatusCollectionViewCell
+        cell.configure(for: pokemon.stats[indexPath.item])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let itemsPerRow: CGFloat = 2
+        let itemsPerCol: CGFloat = 3
+        
+        let totalSpacingHorizontal = (2 * self.spacing) + (itemsPerRow - 1) * self.spacing
+        let totalSpacingVertical = (self.spacing) + (itemsPerRow - 1).rounded() * self.spacing
+        
+        return CGSize(width: (collectionView.frame.width - totalSpacingHorizontal) / itemsPerRow, height: (collectionView.frame.height - totalSpacingVertical) / itemsPerCol)
+    }
+    
+    
 }
     
 

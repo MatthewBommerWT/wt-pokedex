@@ -98,129 +98,51 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="53" translatesAutoresizingMaskIntoConstraints="NO" id="qDz-qL-9ya">
-                                <rect key="frame" x="10" y="551.5" width="394" height="158.5"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jaj-mf-FEQ">
-                                        <rect key="frame" x="0.0" y="0.0" width="191" height="158.5"/>
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="top" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="a15-8E-fvs">
-                                                <rect key="frame" x="0.0" y="0.0" width="191" height="41.5"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="juN-Ss-UAe">
-                                                        <rect key="frame" x="0.0" y="0.0" width="23" height="20.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="uN7-g7-GSy">
-                                                        <rect key="frame" x="0.0" y="37.5" width="150" height="4"/>
-                                                    </progressView>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Sc4-1X-Eyw">
-                                                <rect key="frame" x="0.0" y="58.5" width="191" height="40.5"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Defense" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VS9-WW-0Wd">
-                                                        <rect key="frame" x="0.0" y="0.0" width="63.5" height="20.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZCT-BZ-6Fb">
-                                                        <rect key="frame" x="0.0" y="36.5" width="150" height="4"/>
-                                                    </progressView>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="top" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="2gw-W6-P7n">
-                                                <rect key="frame" x="0.0" y="116" width="191" height="42.5"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Special Defense" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UF8-xS-XXk">
-                                                        <rect key="frame" x="0.0" y="0.0" width="123" height="20.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="snj-DG-NNM">
-                                                        <rect key="frame" x="0.0" y="38.5" width="150" height="4"/>
-                                                    </progressView>
-                                                </subviews>
-                                            </stackView>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="QA9-PO-Sc4">
-                                        <rect key="frame" x="244" y="0.0" width="150" height="158.5"/>
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="top" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="aZ6-Lt-BRo">
-                                                <rect key="frame" x="0.0" y="0.0" width="150" height="42.5"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Attack" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jWu-Yl-v69">
-                                                        <rect key="frame" x="0.0" y="0.0" width="49" height="21.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="acA-Kq-I07">
-                                                        <rect key="frame" x="0.0" y="38.5" width="150" height="4"/>
-                                                    </progressView>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="H2x-Fm-3d9">
-                                                <rect key="frame" x="0.0" y="60.5" width="150" height="39.5"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Special-Attack" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EQ1-nQ-Y2A">
-                                                        <rect key="frame" x="0.0" y="0.0" width="111.5" height="20.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="G6K-ad-cwT">
-                                                        <rect key="frame" x="0.0" y="35.5" width="150" height="4"/>
-                                                    </progressView>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Wcv-cg-Hfk">
-                                                <rect key="frame" x="0.0" y="118" width="150" height="40.5"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Speed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nB3-lX-jSB">
-                                                        <rect key="frame" x="0.0" y="0.0" width="49" height="20.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Epy-zy-67G">
-                                                        <rect key="frame" x="0.0" y="36.5" width="150" height="4"/>
-                                                    </progressView>
-                                                </subviews>
-                                            </stackView>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                            </stackView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GDc-e2-uYT">
+                                <rect key="frame" x="0.0" y="536.5" width="414" height="325.5"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5cJ-dX-srs">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="KXy-dR-00A">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="SZ0-ZF-zO8">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="5Ow-6B-koS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="5Ow-6B-koS" firstAttribute="trailing" secondItem="ICG-oh-JqM" secondAttribute="trailing" constant="10" id="3q2-Yr-TUM"/>
                             <constraint firstItem="5Ow-6B-koS" firstAttribute="trailing" secondItem="jmr-ch-CYW" secondAttribute="trailing" constant="10" id="AjE-SF-Ztb"/>
-                            <constraint firstItem="5Ow-6B-koS" firstAttribute="trailing" secondItem="qDz-qL-9ya" secondAttribute="trailing" constant="10" id="IxJ-65-LsL"/>
-                            <constraint firstItem="qDz-qL-9ya" firstAttribute="top" secondItem="jmr-ch-CYW" secondAttribute="bottom" constant="25" id="N6i-LN-OuR"/>
+                            <constraint firstItem="GDc-e2-uYT" firstAttribute="bottom" secondItem="5Ow-6B-koS" secondAttribute="bottom" id="KPW-l0-Ikz"/>
                             <constraint firstItem="pSe-3C-zrQ" firstAttribute="leading" secondItem="5Ow-6B-koS" secondAttribute="leading" constant="10" id="Nlc-6i-pke"/>
+                            <constraint firstItem="GDc-e2-uYT" firstAttribute="leading" secondItem="5Ow-6B-koS" secondAttribute="leading" id="SwQ-ue-lui"/>
                             <constraint firstItem="pSe-3C-zrQ" firstAttribute="top" secondItem="ICG-oh-JqM" secondAttribute="bottom" constant="10" id="YM3-BR-ClC"/>
-                            <constraint firstItem="qDz-qL-9ya" firstAttribute="leading" secondItem="5Ow-6B-koS" secondAttribute="leading" constant="10" id="ZVy-GG-nxA"/>
                             <constraint firstItem="jmr-ch-CYW" firstAttribute="top" secondItem="pSe-3C-zrQ" secondAttribute="bottom" constant="15" id="dvT-gD-MYR"/>
+                            <constraint firstItem="GDc-e2-uYT" firstAttribute="top" secondItem="jmr-ch-CYW" secondAttribute="bottom" constant="10" id="k6m-n2-XjP"/>
                             <constraint firstItem="5Ow-6B-koS" firstAttribute="trailing" secondItem="pSe-3C-zrQ" secondAttribute="trailing" constant="10" id="qkK-t6-1aS"/>
                             <constraint firstItem="ICG-oh-JqM" firstAttribute="top" secondItem="5Ow-6B-koS" secondAttribute="top" constant="5" id="qle-N6-UMd"/>
                             <constraint firstItem="jmr-ch-CYW" firstAttribute="leading" secondItem="5Ow-6B-koS" secondAttribute="leading" constant="10" id="rge-me-3lV"/>
+                            <constraint firstItem="5Ow-6B-koS" firstAttribute="trailing" secondItem="GDc-e2-uYT" secondAttribute="trailing" id="tor-SB-BNn"/>
                             <constraint firstItem="ICG-oh-JqM" firstAttribute="leading" secondItem="5Ow-6B-koS" secondAttribute="leading" constant="10" id="y43-lK-1wu"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="abilitiesLabel" destination="eq9-Ho-Rvf" id="OO6-MQ-Pm4"/>
                         <outlet property="heightLabel" destination="Wsh-fC-oWK" id="hXr-wB-WFa"/>
-                        <outlet property="hpBar" destination="uN7-g7-GSy" id="LTr-gL-JAU"/>
                         <outlet property="idLabel" destination="GoL-Ko-PAT" id="DSA-aV-t4p"/>
                         <outlet property="pokemonSplashImage" destination="pSe-3C-zrQ" id="vuD-ci-ZYF"/>
+                        <outlet property="statusCollectionView" destination="GDc-e2-uYT" id="UMC-P0-RrW"/>
                         <outlet property="typeLabel" destination="dta-DU-rzH" id="OPU-jH-raB"/>
                         <outlet property="weightLabel" destination="iEX-DP-ok5" id="h2O-mZ-j8b"/>
                     </connections>

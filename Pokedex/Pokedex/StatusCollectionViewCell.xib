@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="StatusCollectionViewCell" customModule="Pokedex" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="348" height="136"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="348" height="136"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="statusTitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Kw-yp-BFR">
+                        <rect key="frame" x="10" y="49" width="78.5" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="statusValue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3nh-J9-T6S">
+                        <rect key="frame" x="250" y="49" width="88" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="98k-WE-qsc">
+                        <rect key="frame" x="10" y="95" width="328" height="4"/>
+                    </progressView>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="6Kw-yp-BFR" firstAttribute="leading" secondItem="ZTg-uK-7eu" secondAttribute="leading" constant="10" id="1A5-d4-i1U"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="top" secondItem="6Kw-yp-BFR" secondAttribute="top" constant="-5" id="IRH-Vv-BxN"/>
+                <constraint firstItem="98k-WE-qsc" firstAttribute="top" secondItem="6Kw-yp-BFR" secondAttribute="bottom" constant="25" id="KGb-cH-doX"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="top" secondItem="3nh-J9-T6S" secondAttribute="top" constant="-5" id="Kwp-Qk-Wj4"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" secondItem="98k-WE-qsc" secondAttribute="trailing" constant="10" id="VXs-0i-d2u"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" secondItem="3nh-J9-T6S" secondAttribute="trailing" constant="10" id="nfQ-0v-UzC"/>
+                <constraint firstItem="98k-WE-qsc" firstAttribute="leading" secondItem="ZTg-uK-7eu" secondAttribute="leading" constant="10" id="oEO-b4-vbN"/>
+            </constraints>
+            <size key="customSize" width="348" height="136"/>
+            <connections>
+                <outlet property="statusProgress" destination="98k-WE-qsc" id="S1l-xs-uxr"/>
+                <outlet property="statusTitle" destination="6Kw-yp-BFR" id="s1S-fc-lnG"/>
+                <outlet property="statusValue" destination="3nh-J9-T6S" id="JWU-sE-JMW"/>
+            </connections>
+            <point key="canvasLocation" x="69.565217391304358" y="-59.598214285714285"/>
+        </collectionViewCell>
+    </objects>
+</document>
