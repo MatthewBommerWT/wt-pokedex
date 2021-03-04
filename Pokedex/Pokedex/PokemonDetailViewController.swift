@@ -31,6 +31,8 @@ class PokemonDetailViewController: UIViewController {
     }
     
     func configure() {
+        let typeColor = PokemonType.init(rawValue: pokemon.types[0].typeName)?.color
+        self.view.backgroundColor = typeColor
         navigationItem.title = pokemon.name.capitalized
         idLabel.text = pokemonIDStyler()
         heightLabel.text = "Height: \(pokemon.height)"
@@ -46,7 +48,7 @@ class PokemonDetailViewController: UIViewController {
             return
         }
         pokemonSplashImage.af.setImage(withURL: url)
-        configureCollectionView()
+        configureCollectionView(color: typeColor!)
     }
     
     private func pokemonIDStyler() -> String {
@@ -60,7 +62,7 @@ class PokemonDetailViewController: UIViewController {
         return "#\(placeholderZeros)\(id)"
     }
     
-    private func configureCollectionView() {
+    private func configureCollectionView(color: UIColor) {
         let nib = UINib(nibName: reuseIdentifier, bundle: Bundle(for: PokemonCollectionViewCell.self))
         statusCollectionView.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
         let layout = UICollectionViewFlowLayout()
@@ -72,6 +74,7 @@ class PokemonDetailViewController: UIViewController {
         statusCollectionView.collectionViewLayout = layout
         statusCollectionView.delegate = self
         statusCollectionView.dataSource = self
+        statusCollectionView.backgroundColor = color
     }
     
 }
@@ -91,8 +94,11 @@ extension PokemonDetailViewController: UICollectionViewDelegate, UICollectionVie
         let itemsPerRow: CGFloat = 2
         let itemsPerCol: CGFloat = 3
         
-        let totalSpacingHorizontal = (2 * self.spacing) + (itemsPerRow - 1) * self.spacing
-        let totalSpacingVertical = (self.spacing) + (itemsPerRow - 1).rounded() * self.spacing
+        let cellBorderRadius: CGFloat = 1.0
+        let space = self.spacing + cellBorderRadius
+        
+        let totalSpacingHorizontal = (2 * space) + (itemsPerRow - 1) * space
+        let totalSpacingVertical = space + (itemsPerCol - 1).rounded() * space
         
         return CGSize(width: (collectionView.frame.width - totalSpacingHorizontal) / itemsPerRow, height: (collectionView.frame.height - totalSpacingVertical) / itemsPerCol)
     }

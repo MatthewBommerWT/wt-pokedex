@@ -73,7 +73,7 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
         let itemsPerCol: CGFloat = 5
         
         let totalSpacingHorizontal = (2 * self.spacing) + (itemsPerRow - 1) * self.spacing
-        let totalSpacingVertical = (self.spacing) + (itemsPerRow - 1).rounded() * self.spacing
+        let totalSpacingVertical = (self.spacing) + (itemsPerCol - 1).rounded() * self.spacing
         
         return CGSize(width: (collectionView.frame.width - totalSpacingHorizontal) / itemsPerRow, height: (collectionView.frame.height - totalSpacingVertical) / itemsPerCol)
     }

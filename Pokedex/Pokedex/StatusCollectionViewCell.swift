@@ -25,8 +25,9 @@ class StatusCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.layer.cornerRadius = 5.0
-        self.layer.borderColor = CGColor(red: 255, green: 255, blue: 255, alpha: 100)
-        self.layer.borderWidth = 5.0
+        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderWidth = 1
+        self.backgroundColor = .white
     }
     
     func configure(for viewModel: PokeStat) {
@@ -37,8 +38,16 @@ class StatusCollectionViewCell: UICollectionViewCell {
             return
         }
         
+        //Not sure how to match these two frames exactly but this is the closest I got
+        let frame = CGRect(origin: statusProgress.bounds.origin, size: CGSize(width: 180, height: 8))
+        let progressOverlay = UIProgressView(frame: frame)
+        progressOverlay.trackTintColor = .clear
+        statusProgress.addSubview(progressOverlay)
+        
         let progressValue = calculateMaxStatusValue(for: status, value: Float(viewModel.baseValue))
-        statusProgress.setProgress(progressValue, animated: true)
+        UIView.animate(withDuration: 2.0) {
+            progressOverlay.setProgress(progressValue, animated: true)
+        }
     }
 
     private func calculateMaxStatusValue(for status: Status, value statusValue: Float) -> Float {
