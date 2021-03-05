@@ -85,8 +85,7 @@ extension PokemonDetailViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! StatusCollectionViewCell
-        cell.configure(for: pokemon.stats[indexPath.item])
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         return cell
     }
     
@@ -100,7 +99,14 @@ extension PokemonDetailViewController: UICollectionViewDelegate, UICollectionVie
         let totalSpacingHorizontal = (2 * space) + (itemsPerRow - 1) * space
         let totalSpacingVertical = space + (itemsPerCol - 1).rounded() * space
         
+        print(CGSize(width: (collectionView.frame.width - totalSpacingHorizontal) / itemsPerRow, height: (collectionView.frame.height - totalSpacingVertical) / itemsPerCol))
+        
         return CGSize(width: (collectionView.frame.width - totalSpacingHorizontal) / itemsPerRow, height: (collectionView.frame.height - totalSpacingVertical) / itemsPerCol)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let cell = cell as! StatusCollectionViewCell
+        cell.configure(for: pokemon.stats[indexPath.item])
     }
     
     

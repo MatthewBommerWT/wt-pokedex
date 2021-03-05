@@ -21,6 +21,7 @@ class StatusCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var statusTitle: UILabel!
     @IBOutlet weak var statusValue: UILabel!
     @IBOutlet weak var statusProgress: UIProgressView!
+    var pokemonStat: PokeStat?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,21 +34,27 @@ class StatusCollectionViewCell: UICollectionViewCell {
     func configure(for viewModel: PokeStat) {
         statusTitle.text = viewModel.statName
         statusValue.text = String(viewModel.baseValue)
+        pokemonStat = viewModel
         
-        guard let status = Status(rawValue: viewModel.statName) else {
+        guard let pokeStat = pokemonStat, let stat = Status(rawValue: pokeStat.statName) else {
             return
         }
+        let progressValue = calculateMaxStatusValue(for: stat, value: Float(pokeStat.baseValue))
+        // DON'T EVER USE THIS IN ANY OF YOUR OTHER PROJECTS
+        UIView.animate(withDuration: 0.0, animations: {
+            self.statusProgress.layoutIfNeeded()
+        }, completion: { finished in
+            self.statusProgress.progress = progressValue
+            
+            UIView.animate(withDuration: 2.0, delay: 0.0, options: [.curveLinear], animations: {
+                self.statusProgress.layoutIfNeeded()
+            })
+        })
         
-        //Not sure how to match these two frames exactly but this is the closest I got
-        let frame = CGRect(origin: statusProgress.bounds.origin, size: CGSize(width: 180, height: 8))
-        let progressOverlay = UIProgressView(frame: frame)
-        progressOverlay.trackTintColor = .clear
-        statusProgress.addSubview(progressOverlay)
         
-        let progressValue = calculateMaxStatusValue(for: status, value: Float(viewModel.baseValue))
-        UIView.animate(withDuration: 2.0) {
-            progressOverlay.setProgress(progressValue, animated: true)
-        }
+        statusProgress.trackTintColor = .clear
+        statusProgress.backgroundColor = .lightGray
+        
     }
 
     private func calculateMaxStatusValue(for status: Status, value statusValue: Float) -> Float {
