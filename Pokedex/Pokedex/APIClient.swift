@@ -14,7 +14,7 @@ enum APIError: Error {
 }
 
 class APIClient {
-
+    
     private var session: URLSession = {
         var config = URLSessionConfiguration.default
         config.requestCachePolicy = .returnCacheDataElseLoad
@@ -42,7 +42,7 @@ class APIClient {
             }
         }
     }
-
+    
     func performPromise<T: Decodable>(request: URLRequest) -> Promise<T> {
         return Promise { fulfill in
             self.performDecodable(request: request) { (result: Result<T, Error>) in

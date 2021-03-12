@@ -11,7 +11,7 @@ import AlamofireImage
 private let reuseIdentifier = "StatusCollectionViewCell"
 
 class PokemonDetailViewController: UIViewController {
-
+    
     
     @IBOutlet weak var pokemonSplashImage: UIImageView!
     @IBOutlet weak var typeLabel: UILabel!
@@ -24,7 +24,7 @@ class PokemonDetailViewController: UIViewController {
     let spacing: CGFloat = 4.0
     var pokemon: Pokemon!
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
@@ -99,8 +99,6 @@ extension PokemonDetailViewController: UICollectionViewDelegate, UICollectionVie
         let totalSpacingHorizontal = (2 * space) + (itemsPerRow - 1) * space
         let totalSpacingVertical = space + (itemsPerCol - 1).rounded() * space
         
-        print(CGSize(width: (collectionView.frame.width - totalSpacingHorizontal) / itemsPerRow, height: (collectionView.frame.height - totalSpacingVertical) / itemsPerCol))
-        
         return CGSize(width: (collectionView.frame.width - totalSpacingHorizontal) / itemsPerRow, height: (collectionView.frame.height - totalSpacingVertical) / itemsPerCol)
     }
     
@@ -111,5 +109,3 @@ extension PokemonDetailViewController: UICollectionViewDelegate, UICollectionVie
     
     
 }
-    
-

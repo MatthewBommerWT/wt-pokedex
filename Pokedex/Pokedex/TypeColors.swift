@@ -28,7 +28,7 @@ enum PokemonType: String {
     case steel
     case fairy
     case unknown
-
+    
     var color: UIColor {
         switch self {
         case .normal:

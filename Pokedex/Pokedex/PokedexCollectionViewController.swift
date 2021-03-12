@@ -14,11 +14,14 @@ enum Section {
     case main
 }
 
-class PokedexCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+protocol PokemonDataTransfer {
+    func fillPokemonListAndUpdateCollectionView(filteredPokeList: [Pokemon])
+}
+
+class PokedexCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, PokemonDataTransfer {
     
-    private let client = APIClient()
+    private let pokemon = PokemonPromise()
     private let archiver = Archiver()
-    private let baseURL = "https://pokeapi.co/api/v2/pokemon"
     private let spacing: CGFloat = 8.0
     
     private lazy var dataSource = makeDataSource()
@@ -32,7 +35,8 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
-        requestPromise()
+        pokemon.inject(handler: self)
+        pokemon.requestPromise()
     }
     
     func configureCollectionView() {
@@ -81,7 +85,7 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
     // MARK: UICollectionViewDelegate
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.item == pokemonList.count - 1, !requestInTransit {
-            requestPromise()
+            pokemon.requestPromise()
         }
     }
     
@@ -97,52 +101,9 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
         return true
     }
     
-    // MARK: Promises
-    func getRequest() -> URLRequest? {
-        var urlComponent = URLComponents(string: nextURL ?? baseURL) //Fix this in the future, the collection view will cycle through api forever
-        if nextURL == nil {
-            let queries = [URLQueryItem(name: "limit", value: "20"), URLQueryItem(name: "offset", value: "0")]
-            urlComponent?.queryItems = queries
-        }
-        
-        guard let url = urlComponent?.url else {
-            return nil
-        }
-        return URLRequest(url: url)
-    }
-    
-    private func fetchPokemonPromise(for resource: NamedAPIResource) -> Promise<Pokemon?>{
-        let request = URLRequest(url: URL(string: resource.url)!)
-        return client.performPromise(request: request).recover { error -> Promise<Pokemon?> in
-            return Promise(value: nil)
-        }
-    }
-    
-    private func zipPokemonPromise(resourceList: [NamedAPIResource]) -> Promise<[Pokemon?]> {
-        return zipArray(resourceList.map({ resource -> Promise<Pokemon?> in
-            fetchPokemonPromise(for: resource)
-        }))
-    }
-    
-    func requestPromise() {
-        guard let request = getRequest() else {
-            return
-        }
-        
-        let pokePromise: Promise<[Pokemon?]> = client.performPromise(request: request)
-            .flatMap { (apiResourceList: NamedAPIResourceList) in
-                self.nextURL = apiResourceList.next
-                return self.zipPokemonPromise(resourceList: apiResourceList.results)
-            }.onResult { (result: Result<[Pokemon?], Error>) in
-                switch result {
-                case .success(let listOfPokemon):
-                    self.pokemonList.append(contentsOf: listOfPokemon.compactMap { $0 })
-                    self.applySnapshot()
-                case .failure(let error):
-                    print(error)
-                }
-            }
-        
-        pokePromise.call()
+    //MARK: PokemonDataTransfer
+    func fillPokemonListAndUpdateCollectionView(filteredPokeList: [Pokemon]) {
+        pokemonList.append(contentsOf: filteredPokeList)
+        applySnapshot(animated: true)
     }
 }

@@ -9,7 +9,7 @@ import UIKit
 import AlamofireImage
 
 class PokemonCollectionViewCell: UICollectionViewCell {
-
+    
     @IBOutlet weak var pokemonImage: UIImageView!
     @IBOutlet weak var pokemonName: UILabel!
     var mainType: PokemonType?
@@ -18,7 +18,7 @@ class PokemonCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         self.layer.cornerRadius = 5.0
     }
-
+    
     func configure(pokemon: Pokemon) {
         pokemonName.text = pokemon.name.capitalized
         pokemonName.textColor = .white
@@ -36,7 +36,7 @@ class PokemonCollectionViewCell: UICollectionViewCell {
         let placeHolderImage = UIImage(named: "placeholder")
         let filter = AspectScaledToFillSizeFilter(size: frame)
         pokemonImage.af.setImage(withURL: url, placeholderImage: placeHolderImage, filter: filter)
-        }
+    }
     
     override func prepareForReuse() {
         pokemonImage.image = nil

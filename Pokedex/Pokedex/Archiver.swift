@@ -40,7 +40,7 @@ class Archiver {
             print(error)
         }
     }
-
+    
     private func writeToFile(data: Data, fileName: String) throws {
         guard let url = fileURL(for: fileName) else {
             throw ArchiverError.failedToCreateURL

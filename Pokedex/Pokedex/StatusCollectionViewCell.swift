@@ -17,7 +17,7 @@ enum Status: String {
 }
 
 class StatusCollectionViewCell: UICollectionViewCell {
-
+    
     @IBOutlet weak var statusTitle: UILabel!
     @IBOutlet weak var statusValue: UILabel!
     @IBOutlet weak var statusProgress: UIProgressView!
@@ -56,21 +56,21 @@ class StatusCollectionViewCell: UICollectionViewCell {
         statusProgress.backgroundColor = .lightGray
         
     }
-
+    
     private func calculateMaxStatusValue(for status: Status, value statusValue: Float) -> Float {
         switch status {
-            case .health:
-                return statusValue / 255
-            case .attack:
-                return statusValue / 255
-            case .defense:
-                return statusValue / 255
-            case .specialAttack:
-                return statusValue / 255
-            case .specialDefense:
-                return statusValue / 255
-            case .speed:
-                return statusValue / 255
+        case .health:
+            return statusValue / 255
+        case .attack:
+            return statusValue / 255
+        case .defense:
+            return statusValue / 255
+        case .specialAttack:
+            return statusValue / 255
+        case .specialDefense:
+            return statusValue / 255
+        case .speed:
+            return statusValue / 255
         }
     }
 }
