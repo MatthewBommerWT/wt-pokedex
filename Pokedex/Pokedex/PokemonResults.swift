@@ -18,8 +18,8 @@ struct NamedAPIResource: Decodable {
 struct Pokemon: Codable, Hashable {
     let id: Int
     let name: String
-    let height: Int
-    let weight: Int
+    let height: Double
+    let weight: Double
     let sprites: Sprite
     let types: [PokeType]
     let stats: [PokeStat]
