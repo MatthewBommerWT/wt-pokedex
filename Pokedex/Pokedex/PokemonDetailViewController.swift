@@ -21,6 +21,7 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var statusCollectionView: UICollectionView!
     
+    
     let spacing: CGFloat = 4.0
     var pokemon: Pokemon!
     
@@ -35,8 +36,8 @@ class PokemonDetailViewController: UIViewController {
         self.view.backgroundColor = typeColor
         navigationItem.title = pokemon.name.capitalized
         idLabel.text = pokemonIDStyler()
-        heightLabel.text = "Height: \(pokemon.height)"
-        weightLabel.text = "Weight: \(pokemon.weight)"
+        heightLabel.text = "Height: \(pokemon.height/10)" + " m"
+        weightLabel.text = "Weight: \(pokemon.weight/10)" + " kgs"
         
         let types = pokemon.types.map { $0.typeName }.joined(separator: ", ")
         typeLabel.text = "Type(s): \(types)"
