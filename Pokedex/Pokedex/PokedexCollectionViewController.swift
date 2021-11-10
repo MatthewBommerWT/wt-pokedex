@@ -38,10 +38,11 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
 
         // Uncomment the method you would like to use for retrieving pokemon data
         /// Obtaining pokemon data through the use of publishers and subscribers
-        // fetchPokemonCombine()
+        // TODO make sure that all pokemon are shown in the correct order
+         fetchPokemonCombine()
         
         /// Obtaining pokemon data using promises
-        // fetchPokemonPromise()
+//         fetchPokemonPromise()
     }
     
     
@@ -93,10 +94,10 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
         if indexPath.item == pokemonList.count - 1, !requestInTransit {
             // Uncomment the method you would like to use for retrieving pokemon data
             /// Obtaining pokemon data through the use of publishers and subscribers
-            // fetchPokemonCombine()
+             fetchPokemonCombine()
             
             /// Obtaining pokemon data using promises
-            // fetchPokemonPromise()
+//             fetchPokemonPromise()
         }
     }
     
@@ -145,7 +146,10 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
                 }
                 self.requestInTransit = false
             } receiveValue: { (pokemons) in
-                self.pokemonList.append(contentsOf: pokemons.compactMap { $0 })
+                self.pokemonList.append(contentsOf: pokemons
+                                            .compactMap { $0 }
+                                            .sorted(by: { $0.id < $1.id })
+                                        )
                 self.applySnapshot()
             }
     }
