@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 import PinkyPromise
 
 private let reuseIdentifier = "PokemonCollectionViewCell"
@@ -20,11 +21,13 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
     private let archiver = Archiver()
     private let baseURL = "https://pokeapi.co/api/v2/pokemon"
     private let spacing: CGFloat = 8.0
+    private var cancellables =  Set<AnyCancellable>()
     
     private lazy var dataSource = makeDataSource()
     var nextURL: String?
     var pokemonList: [Pokemon] = []
     var requestInTransit: Bool = false
+    var subscriber: AnyCancellable? // Retain subscriber in memory so that it doesn't get deallocated after creation
     
     typealias DataSource = UICollectionViewDiffableDataSource<Section, Pokemon>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Pokemon>
@@ -32,8 +35,15 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
-        requestPromise()
+
+        // Uncomment the method you would like to use for retrieving pokemon data
+        /// Obtaining pokemon data through the use of publishers and subscribers
+        // fetchPokemonCombine()
+        
+        /// Obtaining pokemon data using promises
+        // fetchPokemonPromise()
     }
+    
     
     func configureCollectionView() {
         let nib = UINib(nibName: reuseIdentifier, bundle: Bundle(for: PokemonCollectionViewCell.self))
@@ -81,7 +91,12 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
     // MARK: UICollectionViewDelegate
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.item == pokemonList.count - 1, !requestInTransit {
-            requestPromise()
+            // Uncomment the method you would like to use for retrieving pokemon data
+            /// Obtaining pokemon data through the use of publishers and subscribers
+            // fetchPokemonCombine()
+            
+            /// Obtaining pokemon data using promises
+            // fetchPokemonPromise()
         }
     }
     
@@ -97,43 +112,11 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
         return true
     }
     
-    // MARK: Promises
-    func getRequest() -> URLRequest? {
-        var urlComponent = URLComponents(string: nextURL ?? baseURL) //Fix this in the future, the collection view will cycle through api forever
-        if nextURL == nil {
-            let queries = [URLQueryItem(name: "limit", value: "20"), URLQueryItem(name: "offset", value: "0")]
-            urlComponent?.queryItems = queries
-        }
-        
-        guard let url = urlComponent?.url else {
-            return nil
-        }
-        return URLRequest(url: url)
-    }
-    
-    private func fetchPokemonPromise(for resource: NamedAPIResource) -> Promise<Pokemon?>{
-        let request = URLRequest(url: URL(string: resource.url)!)
-        return client.performPromise(request: request).recover { error -> Promise<Pokemon?> in
-            return Promise(value: nil)
-        }
-    }
-    
-    private func zipPokemonPromise(resourceList: [NamedAPIResource]) -> Promise<[Pokemon?]> {
-        return zipArray(resourceList.map({ resource -> Promise<Pokemon?> in
-            fetchPokemonPromise(for: resource)
-        }))
-    }
-    
-    func requestPromise() {
-        guard let request = getRequest() else {
-            return
-        }
-        
-        let pokePromise: Promise<[Pokemon?]> = client.performPromise(request: request)
-            .flatMap { (apiResourceList: NamedAPIResourceList) in
-                self.nextURL = apiResourceList.next
-                return self.zipPokemonPromise(resourceList: apiResourceList.results)
-            }.onResult { (result: Result<[Pokemon?], Error>) in
+    /// Create a promise that wraps other promises and provides Pokemon when available
+    func fetchPokemonPromise() {
+        requestInTransit = true
+        let pokePromise: Promise<[Pokemon?]> = client.fetchPokemon()
+            .onResult { (result: Result<[Pokemon?], Error>) in
                 switch result {
                 case .success(let listOfPokemon):
                     self.pokemonList.append(contentsOf: listOfPokemon.compactMap { $0 })
@@ -141,8 +124,29 @@ class PokedexCollectionViewController: UICollectionViewController, UICollectionV
                 case .failure(let error):
                     print(error)
                 }
+                self.requestInTransit = false
             }
         
         pokePromise.call()
+    }
+    
+    /// Create a subscriber to collect pokemon data from our upstream publishers
+    func fetchPokemonCombine() {
+        requestInTransit = true
+        subscriber = client
+            .collectPokemon()
+            .receive(on: DispatchQueue.main)
+            .sink { (error) in
+                switch error {
+                case .finished:
+                    print("Stream closed normally")
+                case .failure(let error):
+                    print("The following error occurred during subscriber stream \(error)")
+                }
+                self.requestInTransit = false
+            } receiveValue: { (pokemons) in
+                self.pokemonList.append(contentsOf: pokemons.compactMap { $0 })
+                self.applySnapshot()
+            }
     }
 }

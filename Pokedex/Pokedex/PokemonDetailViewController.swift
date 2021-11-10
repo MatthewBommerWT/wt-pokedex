@@ -99,8 +99,6 @@ extension PokemonDetailViewController: UICollectionViewDelegate, UICollectionVie
         let totalSpacingHorizontal = (2 * space) + (itemsPerRow - 1) * space
         let totalSpacingVertical = space + (itemsPerCol - 1).rounded() * space
         
-        print(CGSize(width: (collectionView.frame.width - totalSpacingHorizontal) / itemsPerRow, height: (collectionView.frame.height - totalSpacingVertical) / itemsPerCol))
-        
         return CGSize(width: (collectionView.frame.width - totalSpacingHorizontal) / itemsPerRow, height: (collectionView.frame.height - totalSpacingVertical) / itemsPerCol)
     }
     
